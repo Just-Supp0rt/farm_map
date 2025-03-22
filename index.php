@@ -112,6 +112,7 @@
    const TILES = 8;
 
    let selectedBuilding = null;
+   let selectedCategory = null;
    let unlockedTiles = new Set(["0,0"]);
    let layout = [];
    let deleteMode = false;
@@ -249,32 +250,41 @@
       for (const category in buildingData) {
          const section = document.createElement("div");
          section.className = "category";
-         if (collapseState[category]) section.classList.add("collapsed");
-
+         const content = document.createElement("div");
+         content.className = "category-content";
          const title = document.createElement("h4");
          const icon = document.createElement("span");
-         icon.textContent = collapseState[category] ? "▶" : "▼";
+
+         const isCollapsed = collapseState[category];
+         if (isCollapsed) section.classList.add("collapsed");
+         icon.textContent = isCollapsed ? "▶" : "▼";
+
          title.textContent = category;
          title.prepend(icon);
          title.addEventListener("click", () => {
             section.classList.toggle("collapsed");
-            collapseState[category] = section.classList.contains("collapsed");
-            icon.textContent = collapseState[category] ? "▶" : "▼";
+            const collapsed = section.classList.contains("collapsed");
+            collapseState[category] = collapsed;
+            icon.textContent = collapsed ? "▶" : "▼";
             saveLayout();
          });
          section.appendChild(title);
-
-         const content = document.createElement("div");
-         content.className = "category-content";
 
          buildingData[category].forEach(b => {
             const btn = document.createElement("button");
             btn.textContent = b.name;
             btn.className = "building-button";
+            if (selectedBuilding && selectedBuilding.id === b.id) {
+               btn.classList.add("active");
+               section.classList.remove("collapsed");
+               collapseState[category] = false;
+               icon.textContent = "▼";
+            }
             btn.onclick = () => {
                document.querySelectorAll(".building-button").forEach(b => b.classList.remove("active"));
                btn.classList.add("active");
                selectedBuilding = b;
+               selectedCategory = category;
                deleteMode = false;
             };
             content.appendChild(btn);
