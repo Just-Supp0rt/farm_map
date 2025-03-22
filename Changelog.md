@@ -1,6 +1,14 @@
 # 📦 Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [0.4] - 2025-03-22
+### Added
+- Map cells now show **abbreviated text (2-letter code)** representing each building (e.g., CC for Chicken Coop).
+- Added **tooltips on map cells** showing full building name on hover.
+- Improves layout readability when many buildings are placed.
+
+---
 ## [0.3] - 2025-03-22
 ### Added
 - Version number is now displayed in the UI (bottom of sidebar).
