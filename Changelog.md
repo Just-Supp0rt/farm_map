@@ -2,6 +2,12 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.6] - 2025-03-23
+### Fixed
+- Summary panel now updates correctly after importing a layout and after deleting buildings.
+
+
+---
 ## [0.5] - 2025-03-23
 ### Added
 - Export & Import: Users can now save and load their farm layout as JSON files.

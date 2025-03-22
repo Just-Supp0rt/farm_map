@@ -106,7 +106,7 @@
    <button id="unlockBtn">Unlock Tile</button>
    <button id="clearBtn">Delete All Buildings</button>
    <div id="summaryPanel"></div>
-   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.5</p>
+   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.6</p>
 </div>
 <div id="grid"></div>
 
@@ -240,6 +240,7 @@
          layout = layout.filter(b => !(x >= b.x && x < b.x + b.width && y >= b.y && y < b.y + b.height));
          saveLayout();
          drawGrid();
+         updateSummary();
          return;
       }
       placeBuilding(x, y);
@@ -262,6 +263,7 @@
       layout.push(building);
       saveLayout();
       drawGrid();
+      updateSummary();
    }
 
    function saveLayout() {
@@ -357,6 +359,7 @@
          layout = [];
          saveLayout();
          drawGrid();
+         updateSummary();
       }
    });
    document.getElementById("exportBtn").addEventListener("click", () => {
@@ -378,6 +381,7 @@
                layout = JSON.parse(e.target.result);
                saveLayout();
                drawGrid();
+               updateSummary();
             } catch {
                alert("Invalid layout file.");
             }
