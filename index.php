@@ -102,6 +102,7 @@
    <button id="deleteBtn">Delete Mode</button>
    <button id="unlockBtn">Unlock Tile</button>
    <button id="clearBtn">Delete All Buildings</button>
+   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.3</p>
 </div>
 <div id="grid"></div>
 
@@ -273,6 +274,7 @@
          buildingData[category].forEach(b => {
             const btn = document.createElement("button");
             btn.textContent = b.name;
+            btn.title = `${b.name} – ${b.width}×${b.height}`;
             btn.className = "building-button";
             if (selectedBuilding && selectedBuilding.id === b.id) {
                btn.classList.add("active");

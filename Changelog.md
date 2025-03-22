@@ -1,6 +1,11 @@
 # 📦 Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.3] - 2025-03-22
+### Added
+- Version number is now displayed in the UI (bottom of sidebar).
+- Tooltips on building buttons now show name and size (e.g., "Goat Stable - 6x6").
+- Prepared building UI for optional future image previews or info panels.
 
 ---
 
