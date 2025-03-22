@@ -17,7 +17,9 @@ A simple interactive farm layout planner inspired by *Big Farm: Mobile Harvest*.
 - 🌐 Offline-ready (pure HTML/JS/CSS, no server needed)
 - 🏷 Buildings show abbreviation directly on the map (e.g., "CC" for Chicken Coop)
 - ℹ Tooltips on grid cells for better readability and building identification
-
+- Export and import layout as JSON (file or manual paste)
+- Optional building icons (e.g., 🐓 for Chicken Coop)
+- Live summary panel (counts buildings per type and category)
 
 ---
 

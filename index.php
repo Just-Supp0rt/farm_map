@@ -96,13 +96,17 @@
 </head>
 <body>
 <div id="sidebar">
+   <button id="exportBtn">Export Layout</button>
+   <button id="importBtn">Import Layout</button>
+   <input type="file" id="fileInput" style="display:none" />
    <h3>Buildings</h3>
    <button id="toggleAll">Collapse/Expand All</button>
    <div id="buildingList"></div>
    <button id="deleteBtn">Delete Mode</button>
    <button id="unlockBtn">Unlock Tile</button>
    <button id="clearBtn">Delete All Buildings</button>
-   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.4</p>
+   <div id="summaryPanel"></div>
+   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.5</p>
 </div>
 <div id="grid"></div>
 
@@ -123,36 +127,36 @@
 
    const buildingData = {
       "Stable": [
-         { "id": "chicken_coop", "name": "Chicken Coop", "abbr": "CC", "width": 2, "height": 2, "color": "#ffcc00" },
-         { "id": "pigsty", "name": "Pigsty", "abbr": "PS", "width": 3, "height": 3, "color": "#d2691e" },
-         { "id": "cowshed", "name": "Cowshed", "abbr": "CS", "width": 3, "height": 3, "color": "#8b4513" },
-         { "id": "goat_stable", "name": "Goat Stable", "abbr": "GS", "width": 2, "height": 2, "color": "#a1887f" },
-         { "id": "duck_coop", "name": "Duck Coop", "abbr": "DC", "width": 2, "height": 2, "color": "#81d4fa" },
-         { "id": "rabbit_hutch", "name": "Rabbit Hutch", "abbr": "RH", "width": 2, "height": 2, "color": "#c5e1a5" },
-         { "id": "sheep_pen", "name": "Sheep Pen", "abbr": "SP", "width": 2, "height": 2, "color": "#e0e0e0" }
+         { "id": "chicken_coop", "name": "Chicken Coop", "abbr": "CC", "icon": "🐓", "width": 2, "height": 2, "color": "#ffcc00" },
+         { "id": "pigsty", "name": "Pigsty", "abbr": "PS", "icon": "🐖", "width": 3, "height": 3, "color": "#d2691e" },
+         { "id": "cowshed", "name": "Cowshed", "abbr": "CS", "icon": "🐄", "width": 3, "height": 3, "color": "#8b4513" },
+         { "id": "goat_stable", "name": "Goat Stable", "abbr": "GS", "icon": "🐐", "width": 2, "height": 2, "color": "#a1887f" },
+         { "id": "duck_coop", "name": "Duck Coop", "abbr": "DC", "icon": "🦆", "width": 2, "height": 2, "color": "#81d4fa" },
+         { "id": "rabbit_hutch", "name": "Rabbit Hutch", "abbr": "RH", "icon": "🐇", "width": 2, "height": 2, "color": "#c5e1a5" },
+         { "id": "sheep_pen", "name": "Sheep Pen", "abbr": "SP", "icon": "🐑", "width": 2, "height": 2, "color": "#e0e0e0" }
       ],
       "Orchards": [
-         { "id": "apple_orchard", "name": "Apple Orchard", "abbr": "AO", "width": 3, "height": 3, "color": "#c62828" },
-         { "id": "cherry_orchard", "name": "Cherry Orchard", "abbr": "CO", "width": 3, "height": 3, "color": "#ad1457" },
-         { "id": "almond_orchard", "name": "Almond Orchard", "abbr": "AL", "width": 3, "height": 3, "color": "#a1887f" },
-         { "id": "peach_orchard", "name": "Peach Orchard", "abbr": "PO", "width": 3, "height": 3, "color": "#f48fb1" }
+         { "id": "apple_orchard", "name": "Apple Orchard", "abbr": "AO", "icon": "🍎", "width": 3, "height": 3, "color": "#c62828" },
+         { "id": "cherry_orchard", "name": "Cherry Orchard", "abbr": "CO", "icon": "🍒", "width": 3, "height": 3, "color": "#ad1457" },
+         { "id": "almond_orchard", "name": "Almond Orchard", "abbr": "AL", "icon": "🌰", "width": 3, "height": 3, "color": "#a1887f" },
+         { "id": "peach_orchard", "name": "Peach Orchard", "abbr": "PO", "icon": "🍑", "width": 3, "height": 3, "color": "#f48fb1" }
       ],
       "Fields": [
-         { "id": "field", "name": "Field", "abbr": "FI", "width": 2, "height": 2, "color": "#388e3c" },
-         { "id": "meadow", "name": "Meadow", "abbr": "ME", "width": 2, "height": 2, "color": "#81c784" }
+         { "id": "field", "name": "Field", "abbr": "FI", "icon": "🌾", "width": 2, "height": 2, "color": "#388e3c" },
+         { "id": "meadow", "name": "Meadow", "abbr": "ME", "icon": "🌿", "width": 2, "height": 2, "color": "#81c784" }
       ],
       "Decorations": [
-         { "id": "flowerbed", "name": "Flowerbed", "abbr": "FB", "width": 1, "height": 1, "color": "#e91e63" },
-         { "id": "ornamental_tree", "name": "Ornamental Tree", "abbr": "OT", "width": 1, "height": 1, "color": "#4caf50" },
-         { "id": "hay_bale", "name": "Hay Bale", "abbr": "HB", "width": 1, "height": 1, "color": "#fdd835" },
-         { "id": "vegetable_patch", "name": "Vegetable Patch", "abbr": "VP", "width": 2, "height": 2, "color": "#8bc34a" },
-         { "id": "well", "name": "Well", "abbr": "WL", "width": 1, "height": 1, "color": "#90a4ae" }
+         { "id": "flowerbed", "name": "Flowerbed", "abbr": "FB", "icon": "🌸", "width": 1, "height": 1, "color": "#e91e63" },
+         { "id": "ornamental_tree", "name": "Ornamental Tree", "abbr": "OT", "icon": "🌳", "width": 1, "height": 1, "color": "#4caf50" },
+         { "id": "hay_bale", "name": "Hay Bale", "abbr": "HB", "icon": "🌾", "width": 1, "height": 1, "color": "#fdd835" },
+         { "id": "vegetable_patch", "name": "Vegetable Patch", "abbr": "VP", "icon": "🥕", "width": 2, "height": 2, "color": "#8bc34a" },
+         { "id": "well", "name": "Well", "abbr": "WL", "icon": "⛲", "width": 1, "height": 1, "color": "#90a4ae" }
       ],
       "Machines": [
-         { "id": "silo", "name": "Silo", "abbr": "SI", "width": 2, "height": 2, "color": "#6d4c41" },
-         { "id": "composter", "name": "Composter", "abbr": "CM", "width": 2, "height": 2, "color": "#5d4037" },
-         { "id": "manufactory", "name": "Manufactory", "abbr": "MF", "width": 3, "height": 3, "color": "#455a64" },
-         { "id": "jam_kitchen", "name": "Jam Kitchen", "abbr": "JK", "width": 2, "height": 2, "color": "#f06292" }
+         { "id": "silo", "name": "Silo", "abbr": "SI", "icon": "🏗️", "width": 2, "height": 2, "color": "#6d4c41" },
+         { "id": "composter", "name": "Composter", "abbr": "CM", "icon": "♻️", "width": 2, "height": 2, "color": "#5d4037" },
+         { "id": "manufactory", "name": "Manufactory", "abbr": "MF", "icon": "🏭", "width": 3, "height": 3, "color": "#455a64" },
+         { "id": "jam_kitchen", "name": "Jam Kitchen", "abbr": "JK", "icon": "🍓", "width": 2, "height": 2, "color": "#f06292" }
       ]
    };
 
@@ -190,6 +194,20 @@
       }
       layout.forEach(b => drawBuilding(b));
    }
+   function updateSummary() {
+      const summary = {};
+      layout.forEach(b => {
+         summary[b.name] = (summary[b.name] || 0) + 1;
+      });
+
+      const panel = document.getElementById("summaryPanel");
+      panel.innerHTML = "<strong>Summary:</strong><br>";
+      const total = layout.length;
+      for (const [name, count] of Object.entries(summary)) {
+         panel.innerHTML += `${count} × ${name}<br>`;
+      }
+      panel.innerHTML += `<br><strong>Total:</strong> ${total}`;
+   }
 
    function drawBuilding(b) {
       for (let dy = 0; dy < b.height; dy++) {
@@ -204,7 +222,7 @@
 
                // Only label the top-left cell of the building
                if (dx === 0 && dy === 0) {
-                  cell.textContent = b.abbr || b.name.slice(0, 2).toUpperCase();
+                  cell.textContent = b.icon || b.abbr || b.name.slice(0, 2).toUpperCase();
                   cell.style.fontSize = "10px";
                   cell.style.textAlign = "center";
                   cell.style.lineHeight = "16px";
@@ -341,10 +359,39 @@
          drawGrid();
       }
    });
+   document.getElementById("exportBtn").addEventListener("click", () => {
+      const blob = new Blob([JSON.stringify(layout)], { type: "application/json" });
+      const link = document.createElement("a");
+      link.href = URL.createObjectURL(blob);
+      link.download = "farm-layout.json";
+      link.click();
+   });
+
+   document.getElementById("importBtn").addEventListener("click", () => {
+      const input = document.getElementById("fileInput");
+      input.onchange = () => {
+         const file = input.files[0];
+         if (!file) return;
+         const reader = new FileReader();
+         reader.onload = e => {
+            try {
+               layout = JSON.parse(e.target.result);
+               saveLayout();
+               drawGrid();
+            } catch {
+               alert("Invalid layout file.");
+            }
+         };
+         reader.readAsText(file);
+      };
+      input.click();
+   });
 
    loadLayout();
    drawBuildingButtons();
    drawGrid();
+   updateSummary();
+
 </script>
 </body>
 </html>

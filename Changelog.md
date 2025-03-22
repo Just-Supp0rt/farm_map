@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file.
 
+## [0.5] - 2025-03-23
+### Added
+- Export & Import: Users can now save and load their farm layout as JSON files.
+- Icons: Buildings can now include optional emoji icons, displayed on the map.
+- Summary Panel: Real-time summary of building counts by category and total number placed.
+
+---
 ## [0.4] - 2025-03-22
 ### Added
 - Map cells now show **abbreviated text (2-letter code)** representing each building (e.g., CC for Chicken Coop).
