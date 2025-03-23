@@ -48,17 +48,61 @@ No build tools or dependencies required. Just upload the `.html` file to any sta
 
 ---
 
-## 🧩 Roadmap
+## 🔭 Roadmap (as of v0.7)
 
-- Rotation support
-- Building info tooltips
-- Export/import layouts (as JSON)
-- Zoom & pan support
-- Search bar in sidebar
-- Visual tile unlock overview
-- Shareable layout via URL
+### ✅ Current version: **v0.7**
+- Visual delete mode with red highlight
+- Emoji icons directly in the grid
+- Summary panel updates properly after import/delete
+- Google Analytics (anonymized)
 
 ---
+
+### 🔹 v0.8 – Shareable Layout URLs
+- 🔗 Export entire layout (buildings + unlocked tiles) into a compact URL
+- 📥 Load layout from the URL (using `#` or query string)
+- 🧪 Fallback for invalid/malformed URLs
+- 📋 "Copy shareable link" button in the UI
+
+---
+
+### 🔹 v0.9 – Building Info & UX Polish
+- ℹ️ Tooltips or modal on building click/hover with full info (name, category, size)
+- 🔍 Search bar in sidebar
+- 🎯 Improved button layout for mobile
+- 🧭 Visual outline for unlocked tiles
+
+---
+
+### 🔹 v1.0 – Save, Share, and Load Like a Pro
+- 💾 Named saved layouts (in localStorage)
+- 🔄 Easily switch between layouts
+- ☁️ (Optional) GitHub Gist or Pastebin integration for cloud saves
+- 🧭 Basic tutorial / onboarding flow
+- 📲 Touch/mobile-friendly spacing
+
+---
+
+## 🔮 Post-1.0 Ideas
+
+### v1.1 – Power Tools
+- ⌨️ Keyboard shortcuts (Del to delete, U to unlock)
+- 🔁 Rotation support (90°)
+- 🔍 Zoom & pan
+
+### v1.2 – Themes & Visual Polish
+- 🌙 Dark mode
+- 🎨 Custom color themes
+- 🎮 Pixel-art building icons
+
+### v1.3 – Community Features
+- 📷 Public layout gallery
+- 🏆 "Featured builds"
+- 🗳 Feedback form
+
+---
+
+> Want something added to the roadmap? Open an issue or suggest it in the Discord! 🚜
 
 ## 📜 License
 
