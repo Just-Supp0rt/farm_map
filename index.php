@@ -1,6 +1,16 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
+   <!-- Google tag (gtag.js) -->
+   <script async src="https://www.googletagmanager.com/gtag/js?id=G-NFPR3JJ8JJ"></script>
+   <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+
+      gtag('config', 'G-NFPR3JJ8JJ', { 'anonymize_ip': true });
+   </script>
+   <script id="Cookiebot" src="https://consent.cookiebot.com/uc.js" data-cbid="c35e5ab6-274e-4dc1-bb39-39107a95f910" type="text/javascript" async></script>
    <meta charset="UTF-8" />
    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
    <title>Farm Map Planner</title>
@@ -92,6 +102,9 @@
          border: none;
          cursor: pointer;
       }
+      .highlight {
+         outline: 2px solid red;
+      }
    </style>
 </head>
 <body>
@@ -106,7 +119,7 @@
    <button id="unlockBtn">Unlock Tile</button>
    <button id="clearBtn">Delete All Buildings</button>
    <div id="summaryPanel"></div>
-   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.6</p>
+   <p style="margin-top: 1rem; font-size: 0.85em; color: #666; text-align: center;">Version v0.7</p>
 </div>
 <div id="grid"></div>
 
@@ -237,14 +250,26 @@
 
    function handleCellClick(x, y) {
       if (deleteMode) {
-         layout = layout.filter(b => !(x >= b.x && x < b.x + b.width && y >= b.y && y < b.y + b.height));
-         saveLayout();
-         drawGrid();
-         updateSummary();
-         return;
+         const building = layout.find(b => x >= b.x && x < b.x + b.width && y >= b.y && y < b.y + b.height);
+         if (building) {
+            // Highlight the building on hover
+            for (let dy = 0; dy < building.height; dy++) {
+               for (let dx = 0; dx < building.width; dx++) {
+                  const cx = building.x + dx;
+                  const cy = building.y + dy;
+                  const cell = document.querySelector(`.cell[data-x='${cx}'][data-y='${cy}']`);
+                  if (cell) {
+                     cell.classList.add("highlight");
+                     cell.addEventListener('mouseout', () => cell.classList.remove("highlight"));
+                  }
+               }
+            }
+         }
+      } else {
+         placeBuilding(x, y);
       }
-      placeBuilding(x, y);
    }
+
 
    function placeBuilding(x, y) {
       if (!selectedBuilding) return;
@@ -363,33 +388,43 @@
       }
    });
    document.getElementById("exportBtn").addEventListener("click", () => {
-      const blob = new Blob([JSON.stringify(layout)], { type: "application/json" });
-      const link = document.createElement("a");
-      link.href = URL.createObjectURL(blob);
-      link.download = "farm-layout.json";
-      link.click();
+      const dataStr = JSON.stringify(layout, null, 2);
+      const blob = new Blob([dataStr], { type: "application/json" });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = "farm_layout.json";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
    });
 
+
    document.getElementById("importBtn").addEventListener("click", () => {
-      const input = document.getElementById("fileInput");
-      input.onchange = () => {
-         const file = input.files[0];
-         if (!file) return;
-         const reader = new FileReader();
-         reader.onload = e => {
-            try {
-               layout = JSON.parse(e.target.result);
-               saveLayout();
-               drawGrid();
-               updateSummary();
-            } catch {
-               alert("Invalid layout file.");
-            }
-         };
-         reader.readAsText(file);
+      const input = document.createElement("input");
+      input.type = "file";
+      input.accept = "application/json";
+      input.onchange = event => {
+         const file = event.target.files[0];
+         if (file) {
+            const reader = new FileReader();
+            reader.onload = e => {
+               try {
+                  const importedLayout = JSON.parse(e.target.result);
+                  layout = importedLayout;
+                  drawGrid();
+                  updateSummary();
+               } catch (error) {
+                  alert("Invalid JSON file.");
+               }
+            };
+            reader.readAsText(file);
+         }
       };
       input.click();
    });
+
 
    loadLayout();
    drawBuildingButtons();

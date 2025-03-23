@@ -1,7 +1,16 @@
 # 📦 Changelog
 
 All notable changes to this project will be documented in this file.
+## [0.7] - 2025-03-23
+### Added
+- Visual delete mode with red highlight for buildings under cursor
+- Icons displayed directly in grid using emojis (🐖, 🏭 etc.)
+- Google Analytics integration (GDPR-friendly with IP anonymization)
 
+### Improved
+- Abbreviation or emoji shown only in the top-left tile of each building
+- Better UX for delete mode with immediate visual feedback
+---
 ## [0.6] - 2025-03-23
 ### Fixed
 - Summary panel now updates correctly after importing a layout and after deleting buildings.

@@ -11,17 +11,24 @@ A simple interactive farm layout planner inspired by *Big Farm: Mobile Harvest*.
 - 🧱 Place buildings of various types with size restrictions
 - 🚫 Prevent overlapping building placements
 - 🗑 Delete mode and full "Delete All" option
+- ❌ Visual delete mode with red highlight for buildings under cursor
 - 🧩 Foldable categories for building types
 - 💾 Layout and UI state saved to `localStorage`
 - 🎨 Color-coded buildings
 - 🌐 Offline-ready (pure HTML/JS/CSS, no server needed)
-- 🏷 Buildings show abbreviation directly on the map (e.g., "CC" for Chicken Coop)
+- 🏷 Buildings show abbreviation or emoji in the top-left of each building (e.g., 🐓 for Chicken Coop)
 - ℹ Tooltips on grid cells for better readability and building identification
-- Export and import layout as JSON (file or manual paste)
-- Optional building icons (e.g., 🐓 for Chicken Coop)
-- Live summary panel (counts buildings per type and category)
+- 📤 Export and import layout as JSON (file or manual paste)
+- 📊 Live summary panel (counts buildings per type and category)
+- 📈 Google Analytics integration (GDPR-friendly, anonymized IP tracking)
+## 🆕 Recently Added (v0.7)
+
+- ❌ Visual delete mode with red highlight when hovering buildings
+- 🐓 Icons/emojis displayed directly in grid cells
+- 📈 Google Analytics added (anonymized, GDPR-friendly)
 
 ---
+
 
 ## 🏗 Building Categories
 
@@ -49,6 +56,7 @@ No build tools or dependencies required. Just upload the `.html` file to any sta
 - Zoom & pan support
 - Search bar in sidebar
 - Visual tile unlock overview
+- Shareable layout via URL
 
 ---
 
